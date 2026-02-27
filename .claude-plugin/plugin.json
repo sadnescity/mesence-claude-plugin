@@ -1,0 +1,8 @@
+{
+  "name": "mesen2",
+  "description": "Mesen2 multi-system emulator MCP integration for Claude Code: runtime debugging, memory inspection, disassembly, tracing, ROM hacking, text search, and more. 75 MCP tools for NES, SNES, Game Boy, GBA, PC Engine, SMS, and WonderSwan reverse engineering.",
+  "version": "1.0.0",
+  "author": { "name": "brisma" },
+  "homepage": "https://github.com/brisma/Mesen2",
+  "license": "GPL-3.0"
+}

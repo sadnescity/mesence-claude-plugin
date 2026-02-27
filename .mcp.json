@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mesen": {
+      "type": "http",
+      "url": "http://localhost:9100/mcp"
+    }
+  }
+}
