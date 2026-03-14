@@ -1,6 +1,6 @@
 # Mesen2 Claude Code Plugin
 
-Claude Code plugin for [Mesen2](https://github.com/brisma/Mesen2) multi-system emulator MCP integration.
+Claude Code plugin for [Mesen2](https://github.com/sadnescity/Mesen2) multi-system emulator MCP integration.
 
 Provides MCP server configuration and reference skills for Mesen2's built-in MCP server, enabling runtime debugging, memory inspection, disassembly, tracing, ROM hacking, text search, and more -- 75 MCP tools for NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, and WonderSwan reverse engineering.
 
@@ -9,13 +9,13 @@ Provides MCP server configuration and reference skills for Mesen2's built-in MCP
 Install from the Claude Code plugin marketplace:
 
 ```
-/plugin marketplace add brisma/claude-plugins
-/plugin install mesen2@brisma-plugins
+/plugin marketplace add sadnescity/claude-plugins
+/plugin install mesen2@sadnescity-plugins
 ```
 
 ## Prerequisites
 
-- [Mesen2](https://github.com/brisma/Mesen2) with MCP server support
+- [Mesen2](https://github.com/sadnescity/Mesen2) with MCP server support
 - MCP server enabled in Mesen2:
   - GUI: **Tools > MCP Server Config**
   - Or CLI: `--mcp` flag (with optional `--mcp-port=PORT`)
@@ -46,4 +46,4 @@ NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, WonderSwan
 
 ## Upstream
 
-Mesen2 with MCP support: <https://github.com/brisma/Mesen2>
+Mesen2 with MCP support: <https://github.com/sadnescity/Mesen2>
