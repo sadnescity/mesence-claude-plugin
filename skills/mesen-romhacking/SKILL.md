@@ -4,12 +4,14 @@ description: "Mesen ROM hacking tools: cheats, palette editing, tile pixel editi
 
 # Mesen ROM Hacking Tools
 
+All tools return plain text unless otherwise noted.
+
 ## Cheats (2 tools)
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_set_cheats(codes[])` | codes: string array | Apply cheat codes (replaces all active cheats) |
-| `mesen_clear_cheats()` | -- | Clear all active cheat codes |
+| `mesen_set_cheats(codes[])` | codes: string array | Apply cheat codes (replaces all active cheats). Returns `"3 cheats applied."` |
+| `mesen_clear_cheats()` | -- | Clear all active cheat codes. Returns `"Cheats cleared."` |
 
 **Code format:** Each entry in `codes[]` is `"Type:Code"`. Valid types:
 - `NesGameGenie` -- e.g. `"NesGameGenie:SXIOPO"`
@@ -19,14 +21,12 @@ description: "Mesen ROM hacking tools: cheats, palette editing, tile pixel editi
 - `GbGameGenie` -- Game Boy Game Genie format
 - `GbGameShark` -- Game Boy GameShark format
 
-Returns `cheatsApplied` count and `errors` (if any codes were invalid).
-
 ## Palette (2 tools)
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_get_palette(cpuType)` | cpuType | Get all palette colors as RGB hex values |
-| `mesen_set_palette_color(cpuType, colorIndex, colorHex)` | colorHex: 6-digit RGB hex | Set a single palette color at runtime |
+| `mesen_get_palette(cpuType)` | cpuType | Get all palette colors. Returns header + space-separated RGB hex values. |
+| `mesen_set_palette_color(cpuType, colorIndex, colorHex)` | colorHex: 6-digit RGB hex | Set a single palette color at runtime. Returns `"Color 5 set to #FF0000"` |
 
 **Notes:**
 - `colorHex` is 6-digit RGB hex (e.g. `"FF0000"` for red). Optional `#` or `$` prefix accepted.
@@ -36,8 +36,8 @@ Returns `cheatsApplied` count and `errors` (if any codes were invalid).
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_get_tile_pixel(tileAddress, format, x, y, memoryType)` | x/y within tile | Read a pixel from a tile in memory |
-| `mesen_set_tile_pixel(tileAddress, format, x, y, color, memoryType)` | color: palette index | Write a pixel to a tile in memory |
+| `mesen_get_tile_pixel(tileAddress, format, x, y, memoryType)` | x/y within tile | Read a pixel from a tile in memory. Returns `"Color index: 2"` |
+| `mesen_set_tile_pixel(tileAddress, format, x, y, color, memoryType)` | color: palette index | Write a pixel to a tile in memory. Returns `"Pixel set to color 2"` |
 
 **Parameters:**
 - `tileAddress` -- Address of the tile data (decimal, `0x` hex, or `$` hex prefix)
@@ -47,14 +47,12 @@ Returns `cheatsApplied` count and `errors` (if any codes were invalid).
 
 **Tile pixel formats:** `Bpp2`, `Bpp4`, `Bpp8`, `NesBpp2`, `SmsBpp4`, `GbaBpp4`, `GbaBpp8`, `PceBpp4`, `WsBpp2`, `DirectColor`
 
-Returns `colorIndex` (the palette index value at that pixel).
-
 ## ROM Header & Output (2 tools)
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_get_rom_header()` | -- | Get raw ROM header bytes as hex dump |
-| `mesen_save_modified_rom(filepath, saveAsIps?, stripOption?)` | saveAsIps=false | Save modified ROM to file |
+| `mesen_get_rom_header()` | -- | Get ROM header. Returns JSON (console-specific structured data). |
+| `mesen_save_modified_rom(filepath, saveAsIps?, stripOption?)` | saveAsIps=false | Save modified ROM. Returns `"ROM saved to /path"` or `"IPS patch saved to /path"` |
 
 **Parameters for `mesen_save_modified_rom`:**
 - `filepath` -- Output file path
@@ -65,15 +63,13 @@ Returns `colorIndex` (the palette index value at that pixel).
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_run_lua_script(code, waitMs?, persistent?)` | waitMs=200, persistent=false | Run Lua code in the emulator |
+| `mesen_run_lua_script(code, waitMs?, persistent?)` | waitMs=200, persistent=false | Run Lua code. Non-persistent: returns log output directly. Persistent: returns `"Script #7 running (persistent).\n{log}"` |
 | `mesen_remove_lua_script(scriptId)` | scriptId from run_lua_script | Remove a persistent script by ID |
 
 **Parameters for `mesen_run_lua_script`:**
 - `code` -- Lua source code to execute
 - `waitMs` -- Time in ms to wait for output (default 200, max 5000)
 - `persistent` -- `false` (default): script runs once and auto-cleans up; `true`: script stays running
-
-Returns `scriptId` and `log` output.
 
 **Notes:**
 - Non-persistent scripts run once and auto-cleanup.
@@ -83,11 +79,11 @@ Returns `scriptId` and `log` output.
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_relative_search(searchText, memoryType, startAddress?, endAddress?, maxResults?)` | -- | Find text by matching byte differences between consecutive characters |
-| `mesen_load_tbl(tblPathOrContent)` | -- | Load a TBL character mapping table |
-| `mesen_search_text(text, memoryType, startAddress?, endAddress?, maxResults?)` | -- | Search memory for text using loaded TBL |
-| `mesen_decode_text(address, length, memoryType, endMarker?)` | -- | Decode memory region as text using loaded TBL |
-| `mesen_get_tbl_info()` | -- | Show all mappings in the currently loaded TBL |
+| `mesen_relative_search(searchText, memoryType, startAddress?, endAddress?, maxResults?)` | -- | Find text by matching byte differences. Returns text with matches per line. |
+| `mesen_load_tbl(tblPathOrContent)` | -- | Load a TBL character mapping table. Returns text confirmation. |
+| `mesen_search_text(text, memoryType, startAddress?, endAddress?, maxResults?)` | -- | Search memory for text using loaded TBL. Returns text with matches. |
+| `mesen_decode_text(address, length, memoryType, endMarker?)` | -- | Decode memory region as text using loaded TBL. Returns `"24 bytes: Hello, World!"` |
+| `mesen_get_tbl_info()` | -- | Show all mappings in the currently loaded TBL. Returns text. |
 
 ### Relative Search
 

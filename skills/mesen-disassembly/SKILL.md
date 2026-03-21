@@ -4,16 +4,17 @@ description: "Mesen disassembly, assembly, tracing, profiling, and code analysis
 
 # Mesen Disassembly, Assembly & Code Analysis Tools
 
+All tools return plain text unless otherwise noted.
+
 ## Disassembly (2 tools)
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_disassemble(address, lineCount, cpuType, outputFile?)` | address (dec/0x/$), lineCount (max 500), cpuType, optional outputFile | Disassemble code. Returns lines with address, byteCode, text, comment. |
-| `mesen_find_occurrences(searchString, cpuType, matchCase?, matchWholeWord?)` | searchString (e.g. "JSR", "LDA #$"), cpuType, matchCase=false, matchWholeWord=false | Search disassembly for text pattern. Returns up to 500 matches. |
+| `mesen_disassemble(address, lineCount, cpuType, outputFile?)` | address (dec/0x/$), lineCount (max 500), cpuType, optional outputFile | Disassemble code. Returns plain text lines: `"$8000: SEI  ; comment"` |
+| `mesen_find_occurrences(searchString, cpuType, matchCase?, matchWholeWord?)` | searchString (e.g. "JSR", "LDA #$"), cpuType, matchCase=false, matchWholeWord=false | Search disassembly for text pattern. Returns plain text lines: `"$8010: JSR $9000"`. Up to 500 matches. |
 
 **Notes:**
 - Address can be specified in decimal, hex with `0x` prefix, or 6502-style `$` prefix.
-- Output includes address, raw byte code, disassembled text, and any auto-generated comments.
 - Use `outputFile` to write large disassembly dumps to disk instead of returning them inline.
 - `mesen_find_occurrences` searches the full disassembly view, useful for finding all calls to a subroutine or all uses of a specific instruction pattern.
 
@@ -21,11 +22,10 @@ description: "Mesen disassembly, assembly, tracing, profiling, and code analysis
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_assemble(code, startAddress, cpuType)` | code (newline-separated), startAddress, cpuType | Assemble code at address. Returns success, byteCount, hexBytes, errors. |
+| `mesen_assemble(code, startAddress, cpuType)` | code (newline-separated), startAddress, cpuType | Assemble code at address. Returns `"Assembled 3 bytes at $8000: A90042"` or error text. |
 
 **Notes:**
 - Pass multiple instructions separated by newlines.
-- Returns the assembled bytes as hex, the total byte count, and any assembler errors.
 - The assembled bytes are written directly into memory at `startAddress`.
 
 ## CPU Types
@@ -41,7 +41,7 @@ The following `cpuType` values are valid for disassembly, assembly, and tracing 
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_label(action, address?, memoryType?, label?, comment?)` | action: set\|clear_all | Set a label on an address or clear all labels. 'set' requires address, memoryType, label. Optional comment. |
+| `mesen_label(action, address?, memoryType?, label?, comment?)` | action: set\|clear_all | Set a label or clear all. Returns `"Label 'main_loop' set at $8000"` or `"Labels cleared."` |
 
 **Notes:**
 - Labels appear in the disassembly view and trace output, replacing raw addresses with meaningful names.
@@ -53,10 +53,10 @@ The following `cpuType` values are valid for disassembly, assembly, and tracing 
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_get_cdl_statistics(memoryType)` | memoryType | CDL coverage: percentage of code, data, and unknown bytes |
-| `mesen_get_cdl_functions(memoryType)` | memoryType | List function entry points detected by CDL |
-| `mesen_mark_bytes_as(startAddress, endAddress, memoryType, flags)` | startAddress, endAddress, memoryType, flags: None\|Code\|Data\|JumpTarget\|SubEntryPoint | Mark byte range in CDL |
-| `mesen_cdl_file(action, memoryType, filepath)` | action: save\|load, memoryType, filepath | Save or load CDL data to/from file |
+| `mesen_get_cdl_statistics(memoryType)` | memoryType | CDL coverage. Returns `"Total=32768 Code=12000 Data=8000 Unknown=12768 JumpTargets=45 Functions=12 CHR=4096/8192"` |
+| `mesen_get_cdl_functions(memoryType)` | memoryType | List function entry points. Returns space-separated addresses: `"$8000 $8120 $8300"` |
+| `mesen_mark_bytes_as(startAddress, endAddress, memoryType, flags)` | startAddress, endAddress, memoryType, flags: None\|Code\|Data\|JumpTarget\|SubEntryPoint | Mark byte range in CDL. Returns `"Marked $8000-$80FF as Code"` |
+| `mesen_cdl_file(action, memoryType, filepath)` | action: save\|load, memoryType, filepath | Save or load CDL data. Returns `"CDL saved to /path"` or `"CDL loaded from /path"` |
 
 **Notes:**
 - CDL (Code Data Logger) tracks which bytes have been executed as code vs read as data during emulation.
@@ -69,13 +69,13 @@ The following `cpuType` values are valid for disassembly, assembly, and tracing 
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_set_trace_options(cpuType, enabled?, format?, condition?, useLabels?, indentCode?)` | cpuType, enabled=true, optional format string, condition expression, useLabels=true, indentCode=false | Configure trace logging. Must be called before reading trace. |
-| `mesen_get_execution_trace(count, cpuType?, outputFile?)` | count (max 30000), optional cpuType filter, optional outputFile | Get last N executed instructions with register state |
+| `mesen_set_trace_options(cpuType, enabled?, format?, condition?, useLabels?, indentCode?)` | cpuType, enabled=true, optional format string, condition expression, useLabels=true, indentCode=false | Configure trace logging. Returns `"Trace enabled for Snes."` |
+| `mesen_get_execution_trace(count, cpuType?, outputFile?)` | count (max 30000), optional cpuType filter, optional outputFile | Get last N executed instructions. Returns plain text lines (CPU prefix included only when no cpuType filter). |
 | `mesen_clear_execution_trace()` | -- | Clear the trace buffer |
 | `mesen_trace_file(action, filepath?)` | action: start\|stop, filepath (required for start) | Log execution trace to file continuously |
 
 **Notes:**
-- Call `mesen_set_trace_options` to enable tracing before using `mesen_get_execution_trace`. Tracing is off by default.
+- Tracing is auto-enabled for the main CPU on debugger init. Use `mesen_set_trace_options` to customize format, add conditions, or enable tracing for additional CPUs.
 - Tracing is per-CPU. Use the `cpuType` parameter on `mesen_get_execution_trace` to filter to a specific processor.
 - The `format` parameter controls what appears in each trace line. Example: `"[Disassembly][Align,24] A:[A,2h] X:[X,2h] Y:[Y,2h]"`
 - The `condition` parameter is a Mesen expression that filters which instructions are logged (e.g., `"A == $FF"` to only trace when the accumulator is 0xFF).
@@ -87,7 +87,7 @@ The following `cpuType` values are valid for disassembly, assembly, and tracing 
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_profiler(action, cpuType, outputFile?)` | action: get\|reset, cpuType, optional outputFile | Per-function profiling: call count, cycles, min/max. 'get' returns statistics, 'reset' clears data. |
+| `mesen_profiler(action, cpuType, outputFile?)` | action: get\|reset, cpuType, optional outputFile | Per-function profiling. Returns text lines: `"$8000 SnesPrgRom calls=1200 incl=500000 excl=320000 min=180 max=450"` |
 
 **Notes:**
 - The profiler collects per-function statistics: total call count, total cycles spent, and min/max cycles per call.

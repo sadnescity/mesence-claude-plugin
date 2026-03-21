@@ -4,25 +4,25 @@ description: "Mesen memory tools: read/write memory, search for byte patterns, f
 
 # Mesen Memory Tools
 
-## Memory Read/Write (3 tools)
+All tools return plain text.
+
+## Memory Read/Write (2 tools)
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_read_memory(address, length, memoryType, outputFile?)` | address (dec/0x/$), length (max 4096), memoryType, optional outputFile path | Read memory. Returns hex dump with ASCII. Can save raw binary to file. |
-| `mesen_write_memory(address, hexData, memoryType)` | address, hexData (e.g. "EAEA"), memoryType | Write hex data to memory |
-| `mesen_get_memory_size(memoryType)` | memoryType | Get size of memory region in bytes |
+| `mesen_read_memory(address, length, memoryType, outputFile?)` | address (dec/0x/$), length (max 4096), memoryType, optional outputFile path | Read memory. Returns space-separated hex bytes: `"00 AC 80 D6 B2 80"`. Can save raw binary to file. |
+| `mesen_write_memory(address, hexData, memoryType)` | address, hexData (e.g. "EAEA"), memoryType | Write hex data to memory. Returns `"Wrote 2 bytes at $8000"` |
 
 **Tips:**
-- `mesen_read_memory` returns a hex dump with ASCII sidebar, similar to a hex editor view.
+- `mesen_read_memory` returns space-separated hex bytes (e.g. `"00 AC 80 D6 B2 80"`).
 - Max read size is 4096 bytes per call. For larger reads, specify `outputFile` to save raw binary to disk.
 - `mesen_write_memory` takes a hex string without spaces or `0x` prefix (e.g. `"EAEA"` to write two NOP bytes on 6502).
-- Use `mesen_get_memory_size` to determine the extent of a memory region before reading.
 
 ## Memory Search (1 tool)
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_search_memory(patternHex, memoryType, startAddress?, endAddress?, maxResults?)` | patternHex (e.g. "AD0020"), memoryType, startAddress=0, endAddress=end, maxResults=50 | Search memory for hex byte pattern. Returns matching addresses. |
+| `mesen_search_memory(patternHex, memoryType, startAddress?, endAddress?, maxResults?)` | patternHex (e.g. "AD0020"), memoryType, startAddress=0, endAddress=end, maxResults=50 | Search memory for hex byte pattern. Returns `"Pattern: AD0020  Matches: 3\n$1234 $2345 $3456"` |
 
 **Tips:**
 - `patternHex` is a hex string without spaces (e.g. `"AD0020"` to find the byte sequence `AD 00 20`).
@@ -33,7 +33,7 @@ description: "Mesen memory tools: read/write memory, search for byte patterns, f
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_freeze_address(startAddress, endAddress, cpuType, freeze)` | startAddress, endAddress (same as start for single byte), cpuType, freeze=true/false | Freeze/unfreeze memory address range. Frozen addresses cannot be written by the game. |
+| `mesen_freeze_address(startAddress, endAddress, cpuType, freeze)` | startAddress, endAddress (same as start for single byte), cpuType, freeze=true/false | Freeze/unfreeze memory address range. Returns `"Frozen $0200-$0200"` or `"Unfrozen $0200-$0200"` |
 
 **Notes:**
 - This tool uses `cpuType` (not `memoryType`) because it operates on the CPU address space.
@@ -45,21 +45,20 @@ description: "Mesen memory tools: read/write memory, search for byte patterns, f
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_get_address_info(address, cpuType)` | address (dec/0x/$), cpuType | Convert between CPU (relative) and absolute (physical) addresses. Returns relativeAddress, absoluteAddress, absoluteMemoryType. |
+| `mesen_get_address_info(address, cpuType)` | address (dec/0x/$), cpuType | Convert between CPU (relative) and absolute (physical) addresses. Returns `"$8000 -> $00000 (SnesPrgRom)"` or `"$8000 -> unmapped"` |
 
 **Notes:**
 - Converts a CPU-visible (relative) address to an absolute (physical) address, revealing which memory region it maps to.
-- The response includes `relativeAddress`, `absoluteAddress`, and `absoluteMemoryType`.
 - Useful for understanding memory mapping -- e.g., determining whether a CPU address points to ROM, work RAM, or a hardware register.
 
 ## Access Counters (1 tool)
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_memory_access_counts(action, address?, length?, memoryType?)` | action: get\|reset, address (for get), length=256 (max 256), memoryType (for get) | Get or reset memory access counters. 'get' returns per-address read/write/exec counts. 'reset' clears all counters. |
+| `mesen_memory_access_counts(action, address?, length?, memoryType?)` | action: get\|reset, address (for get), length=256 (max 256), memoryType (for get) | Get or reset memory access counters. Returns sparse text `"$0200 R=150 W=3"` per line. |
 
 **Action-specific parameters:**
-- `get` -- requires `address`, `memoryType`, optional `length` (default 256, max 256). Returns per-address read, write, and exec counts.
+- `get` -- requires `address`, `memoryType`, optional `length` (default 256, max 256). Returns per-address read, write, and exec counts as sparse text lines.
 - `reset` -- no additional parameters. Clears all access counters for all memory regions.
 
 **Tips:**
@@ -72,4 +71,4 @@ description: "Mesen memory tools: read/write memory, search for byte patterns, f
 - **Always call `mesen_list_memory_types` first** to discover valid memory type names for the current ROM. Memory types are console-specific (e.g., NES uses `NesWorkRam`, SNES uses `SnesWorkRam`, Game Boy uses `GbWorkRam`).
 - Addresses can be specified as decimal, `0x` hex, or `$` hex (e.g., `$C000`, `0xC000`, `49152` all refer to the same address).
 - `mesen_freeze_address` and `mesen_get_address_info` use `cpuType` (not `memoryType`) -- they operate on the CPU address space.
-- `mesen_read_memory`, `mesen_write_memory`, `mesen_get_memory_size`, `mesen_search_memory`, and `mesen_memory_access_counts` use `memoryType` -- they operate on physical memory regions.
+- `mesen_read_memory`, `mesen_write_memory`, `mesen_search_memory`, and `mesen_memory_access_counts` use `memoryType` -- they operate on physical memory regions.

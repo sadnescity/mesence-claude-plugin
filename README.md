@@ -2,7 +2,7 @@
 
 Claude Code plugin for [Mesen2](https://github.com/sadnescity/Mesen2) multi-system emulator MCP integration.
 
-Provides MCP server configuration and reference skills for Mesen2's built-in MCP server, enabling runtime debugging, memory inspection, disassembly, tracing, ROM hacking, text search, and more -- 75 MCP tools for NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, and WonderSwan reverse engineering.
+Provides MCP server configuration and reference skills for Mesen2's built-in MCP server, enabling runtime debugging, memory inspection, disassembly, tracing, ROM hacking, text search, and more -- 33 MCP tools for NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, and WonderSwan reverse engineering.
 
 ## Installation
 
@@ -35,10 +35,16 @@ Connects Claude Code to Mesen2's built-in MCP server via Streamable HTTP on `loc
 | `mesen-debug-execution` | CPU debugging: stepping, breakpoints, state inspection, callstack, expressions |
 | `mesen-memory` | Memory read/write, search, freeze, address conversion, access counters |
 | `mesen-disassembly` | Disassembly, assembly, labels, Code Data Logger, tracing, profiling |
-| `mesen-emulator` | System control, config, input, recording, history/rewind, sprites/tilemaps |
+| `mesen-emulator` | System control, save states, history/rewind, sprites/tilemaps |
 | `mesen-romhacking` | Cheats, tiles, palette, Lua scripting, TBL text search, ROM patching |
 | `mesen-console-reference` | Per-console reference: memory types, CPU types, tile formats for all 7 systems |
-| `mesen-workflows` | Reverse engineering workflows: find text, find variables, analyze routines, patch ROMs |
+| `mesen-workflows-nes` | NES reverse engineering workflows |
+| `mesen-workflows-snes` | SNES reverse engineering workflows |
+| `mesen-workflows-gb` | Game Boy / GBC reverse engineering workflows |
+| `mesen-workflows-gba` | GBA reverse engineering workflows |
+| `mesen-workflows-pce` | PC Engine / TurboGrafx-16 reverse engineering workflows |
+| `mesen-workflows-sms` | SMS / Game Gear reverse engineering workflows |
+| `mesen-workflows-ws` | WonderSwan reverse engineering workflows |
 
 ## Supported Systems
 
