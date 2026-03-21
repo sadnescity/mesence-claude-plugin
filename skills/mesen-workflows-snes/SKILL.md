@@ -176,11 +176,12 @@ Use this to understand how the game renders its backgrounds and to inspect graph
 1. `mesen_get_state(component="ppu", cpuType="Snes")` -- check the current BG mode, screen brightness, and VRAM address
 2. `mesen_get_tilemap_info(cpuType="Snes", layer=0)` -- inspect BG1: dimensions, tile size, BPP, scroll position, tilemap/tileset VRAM addresses
 3. `mesen_get_tilemap_info(cpuType="Snes", layer=1)` -- inspect BG2 (available in modes 0-4)
-4. `mesen_get_tilemap_tile_info(x=128, y=112, cpuType="Snes", layer=0)` -- inspect a specific tile by pixel coordinate on BG1
-5. `mesen_get_sprite_list(cpuType="Snes")` -- list all 128 OAM sprites with positions, tile indices, palettes, sizes, priority, flip flags
-6. `mesen_get_palette(cpuType="Snes")` -- view all 256 CGRAM colors (8 BG palettes + 8 sprite palettes, 16 colors each). Colors are 15-bit RGB (5 bits per channel)
-7. `mesen_read_memory(address="$0000", length=64, memoryType="SnesVideoRam")` -- read raw VRAM tile data. SNES tile sizes vary: 2bpp=16 bytes/tile, 4bpp=32 bytes/tile, 8bpp=64 bytes/tile
-8. To find what code updates a specific BG layer, `mesen_breakpoint(action="set", address="$2118", type="Write", memoryType="SnesRegister", cpuType="Snes")` -- watch VRAM data writes, then trace back to find the DMA source and the original tile/map data in ROM
+4. The `TilemapAddress` and `TilesetAddress` returned are **byte offsets** into `SnesVideoRam` (0-65535) — use them directly with `mesen_read_memory`. Do NOT divide by 2 or convert them — Mesen already converts from the PPU's word addressing to byte offsets
+5. `mesen_read_memory(address=tilesetAddr, length=64, memoryType="SnesVideoRam")` -- read raw tile data at the address returned by tilemap_info. SNES tile sizes: 2bpp=16 bytes/tile, 4bpp=32 bytes/tile, 8bpp=64 bytes/tile
+6. `mesen_get_tilemap_tile_info(x=128, y=112, cpuType="Snes", layer=0)` -- inspect a specific tile by pixel coordinate on BG1
+7. `mesen_get_sprite_list(cpuType="Snes")` -- list all 128 OAM sprites with positions, tile indices, palettes, sizes, priority, flip flags
+8. `mesen_get_palette(cpuType="Snes")` -- view all 256 CGRAM colors (8 BG palettes + 8 sprite palettes, 16 colors each). Colors are 15-bit RGB (5 bits per channel)
+9. To find what code updates a specific BG layer, `mesen_breakpoint(action="set", address="$2118", type="Write", memoryType="SnesRegister", cpuType="Snes")` -- watch VRAM data writes, then trace back to find the DMA source and the original tile/map data in ROM
 
 **BG Mode quick reference:**
 
@@ -194,5 +195,7 @@ Use this to understand how the game renders its backgrounds and to inspect graph
 | 5 | 4bpp | 2bpp | -- | -- | Hi-res (512px wide), 16x8 tiles |
 | 6 | 4bpp | -- | OPT | -- | Hi-res + offset-per-tile |
 | 7 | 8bpp | -- | -- | -- | Rotation/scaling (Mode 7). 128x128 tilemap, 256 tiles |
+
+**IMPORTANT — VRAM addressing:** The SNES PPU internally uses 15-bit **word** addresses (0-$7FFF, 32K words), but ALL Mesen MCP tools use **byte** offsets (0-$FFFF, 64KB) for `SnesVideoRam`. Addresses from `mesen_get_tilemap_info`, `mesen_get_tilemap_tile_info`, and `mesen_get_sprite_list` are already byte offsets — pass them directly to `mesen_read_memory` without any conversion. Do NOT halve or double these addresses.
 
 **Tip:** Mode 1 is by far the most common -- nearly all SNES action games, RPGs, and platformers use it. BG1/BG2 are the main playfield layers (16 colors per tile from 8 palettes), BG3 is typically used for status bars or HUD overlays (4 colors). In Mode 1, BG3 can be given highest priority by setting bit 3 of $2105 (the "Mode 1 BG3 priority" flag), which is how games show BG3 text in front of everything else. Mode 7 is used for rotation/scaling effects (F-Zero, Mario Kart, Final Fantasy airship). SNES tiles use planar format -- 2bpp tiles interleave two bit planes per row (16 bytes/tile), 4bpp adds two more planes (32 bytes/tile). The tilemap is 32x32 or 64x64 entries, each 2 bytes: 10-bit tile number + palette + priority + H/V flip.
