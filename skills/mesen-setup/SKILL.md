@@ -1,22 +1,22 @@
 ---
-description: "Mesen2 MCP server setup: enabling the MCP server, Streamable HTTP transport, connection troubleshooting. Use when setting up or troubleshooting Mesen2 MCP connection."
+description: "MesenCE MCP server setup: enabling the MCP server, Streamable HTTP transport, connection troubleshooting. Use when setting up or troubleshooting MesenCE MCP connection."
 ---
 
-# Mesen2 MCP Server Setup
+# MesenCE MCP Server Setup
 
 ## Overview
 
-Mesen2 is a **multi-system emulator** (NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, WonderSwan) with a **built-in MCP server** -- no external process or sidecar is needed. The emulator itself serves the MCP protocol over Streamable HTTP (MCP Protocol Revision 2025-11-25).
+MesenCE is a **multi-system emulator** (NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, WonderSwan) with a **built-in MCP server** -- no external process or sidecar is needed. The emulator itself serves the MCP protocol over Streamable HTTP (MCP Protocol Revision 2025-11-25).
 
 ## Enabling the MCP Server
 
 ### Via GUI
-1. Open Mesen2
+1. Open MesenCE
 2. Go to **Tools menu > MCP Server Config**
 3. Set the port and enable the server
 
 ### Via CLI
-Launch Mesen2 with the `--mcp` flag to auto-start the MCP server on launch:
+Launch MesenCE with the `--mcp` flag to auto-start the MCP server on launch:
 
 ```bash
 Mesen --mcp                  # Start with MCP server on default port
@@ -32,7 +32,7 @@ The default port is **9100**.
 - **SSE support:** Include `Accept: text/event-stream` header for SSE responses
 - **Session management:** Server returns `MCP-Session-Id` header on initialize; include it in all subsequent requests
 
-The server starts automatically when Mesen2 launches (if enabled). It does not require a ROM to be loaded -- `mesen_get_status` works even with no ROM loaded.
+The server starts automatically when MesenCE launches (if enabled). It does not require a ROM to be loaded -- `mesen_get_status` works even with no ROM loaded.
 
 ## Thread Safety
 

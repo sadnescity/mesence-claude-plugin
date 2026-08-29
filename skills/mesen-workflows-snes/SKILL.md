@@ -1,5 +1,5 @@
 ---
-description: "SNES reverse engineering workflows for Mesen2: find text, find variables, analyze routines, VBlank/NMI analysis, patch ROMs, automate input, SPC700 audio analysis, DMA/HDMA graphics analysis, BG mode and tilemap inspection. SNES-specific memory types, vectors, registers, and instruction patterns."
+description: "SNES reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank/NMI analysis, patch ROMs, automate input, SPC700 audio analysis, DMA/HDMA graphics analysis, BG mode and tilemap inspection. SNES-specific memory types, vectors, registers, and instruction patterns."
 ---
 
 # SNES Reverse Engineering Workflows

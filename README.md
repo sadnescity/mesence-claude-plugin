@@ -1,8 +1,8 @@
-# Mesen2 Claude Code Plugin
+# MesenCE Claude Code Plugin
 
-Claude Code plugin for [Mesen2](https://github.com/sadnescity/Mesen2) multi-system emulator MCP integration.
+Claude Code plugin for [MesenCE](https://github.com/sadnescity/MesenCE) multi-system emulator MCP integration.
 
-Provides MCP server configuration and reference skills for Mesen2's built-in MCP server, enabling runtime debugging, memory inspection, disassembly, tracing, ROM hacking, text search, and more -- 33 MCP tools for NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, and WonderSwan reverse engineering.
+Provides MCP server configuration and reference skills for MesenCE's built-in MCP server, enabling runtime debugging, memory inspection, disassembly, tracing, ROM hacking, text search, and more -- 57 MCP tools for NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, and WonderSwan reverse engineering.
 
 ## Installation
 
@@ -10,13 +10,13 @@ Install from the Claude Code plugin marketplace:
 
 ```
 /plugin marketplace add sadnescity/claude-plugins
-/plugin install mesen2@sadnescity-plugins
+/plugin install mesence@sadnescity-plugins
 ```
 
 ## Prerequisites
 
-- [Mesen2](https://github.com/sadnescity/Mesen2) with MCP server support
-- MCP server enabled in Mesen2:
+- [MesenCE](https://github.com/sadnescity/MesenCE) with MCP server support
+- MCP server enabled in MesenCE:
   - GUI: **Tools > MCP Server Config**
   - Or CLI: `--mcp` flag (with optional `--mcp-port=PORT`)
 - Default port: 9100
@@ -25,7 +25,7 @@ Install from the Claude Code plugin marketplace:
 
 ### MCP Server Configuration (`.mcp.json`)
 
-Connects Claude Code to Mesen2's built-in MCP server via Streamable HTTP on `localhost:9100`.
+Connects Claude Code to MesenCE's built-in MCP server via Streamable HTTP on `localhost:9100`.
 
 ### Skills
 
@@ -52,4 +52,4 @@ NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, WonderSwan
 
 ## Upstream
 
-Mesen2 with MCP support: <https://github.com/sadnescity/Mesen2>
+MesenCE with MCP support: <https://github.com/sadnescity/MesenCE>

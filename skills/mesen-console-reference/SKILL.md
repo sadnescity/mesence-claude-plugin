@@ -1,10 +1,10 @@
 ---
-description: "Per-console reference for Mesen2: memory types, CPU types, tile formats, cheat types for NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, WonderSwan"
+description: "Per-console reference for MesenCE: memory types, CPU types, tile formats, cheat types for NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, WonderSwan"
 ---
 
 ## Overview
 
-Mesen2 is a multi-system emulator. Many MCP tools require `memoryType` or `cpuType` parameters that are console-specific. Use `mesen_list_memory_types` and `mesen_list_cpu_types` at runtime to discover exact values for the current ROM. This reference lists the common types per console.
+MesenCE is a multi-system emulator. Many MCP tools require `memoryType` or `cpuType` parameters that are console-specific. Use `mesen_list_memory_types` and `mesen_list_cpu_types` at runtime to discover exact values for the current ROM. This reference lists the common types per console.
 
 ## MCP Resources
 
