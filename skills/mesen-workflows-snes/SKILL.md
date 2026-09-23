@@ -110,7 +110,7 @@ Use this to script repeatable input sequences for testing menus, game sequences,
 9. `mesen_step(cpuType="Snes", stepType="PpuFrame")` -- advance the frame
 10. `mesen_take_screenshot()` -- capture the screen to verify the result
 
-**Tip:** The SNES controller has more buttons than the NES (X, Y, L, R in addition to A, B). To press multiple buttons simultaneously, combine them: `buttons="Y,Right"` (many SNES games use Y for run + direction for movement). Use `mesen_save_state` before an input sequence and `mesen_load_state` to retry. For player 2, use port=1. SNES games read controllers via the auto-joypad feature ($4200 bit 0) which reads during VBlank, or manually via $4016/$4017 -- either way, one frame of held input is sufficient for most games.
+**Tip:** The SNES controller has more buttons than the NES (X, Y, L, R in addition to A, B). To press multiple buttons simultaneously, combine them: `buttons="Y,Right"` (many SNES games use Y for run + direction for movement). Use `mesen_save_state(action="save")` before an input sequence and `mesen_save_state(action="load")` to retry. For player 2, use port=1. SNES games read controllers via the auto-joypad feature ($4200 bit 0) which reads during VBlank, or manually via $4016/$4017 -- either way, one frame of held input is sufficient for most games.
 
 ## Workflow G: SPC700 Audio Analysis
 

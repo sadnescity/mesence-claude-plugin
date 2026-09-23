@@ -110,4 +110,4 @@ Use this to script repeatable input sequences for testing menus, game sequences,
 9. `mesen_step(cpuType="Pce", stepType="PpuFrame")` -- advance the frame
 10. `mesen_take_screenshot()` -- capture the screen to verify the result
 
-**Tip:** Hold a direction for multiple frames by repeating `mesen_step` without changing the input override. To press two buttons simultaneously, combine them: `buttons="A,Right"`. Use `mesen_save_state` before a sequence and `mesen_load_state` to retry. PCE games read the controller via I/O port $1000. The 6-button controller (Avenue Pad 6) adds Run, Select, III, IV, V, VI buttons in a second scan. For TurboTap multitap games, use port 0-4.
+**Tip:** Hold a direction for multiple frames by repeating `mesen_step` without changing the input override. To press two buttons simultaneously, combine them: `buttons="A,Right"`. Use `mesen_save_state(action="save")` before a sequence and `mesen_save_state(action="load")` to retry. PCE games read the controller via I/O port $1000. The 6-button controller (Avenue Pad 6) adds Run, Select, III, IV, V, VI buttons in a second scan. For TurboTap multitap games, use port 0-4.

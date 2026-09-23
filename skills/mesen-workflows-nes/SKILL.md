@@ -109,7 +109,7 @@ Use this to script repeatable input sequences for testing menus, game sequences,
 9. `mesen_step(cpuType="Nes", stepType="PpuFrame")` -- advance the frame
 10. `mesen_take_screenshot()` -- capture the screen to verify the result
 
-**Tip:** Hold a direction for multiple frames by repeating `mesen_step` without changing the input override. To press two buttons simultaneously, combine them: `buttons="A,Right"`. Use `mesen_save_state` before an input sequence and `mesen_load_state` to retry. For player 2, use port=1. NES games typically read the controller once per frame during NMI via $4016, so each frame of input counts.
+**Tip:** Hold a direction for multiple frames by repeating `mesen_step` without changing the input override. To press two buttons simultaneously, combine them: `buttons="A,Right"`. Use `mesen_save_state(action="save")` before an input sequence and `mesen_save_state(action="load")` to retry. For player 2, use port=1. NES games typically read the controller once per frame during NMI via $4016, so each frame of input counts.
 
 ## Workflow G: ROM & Mapper Analysis
 

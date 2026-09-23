@@ -6,7 +6,7 @@ description: "MesenCE MCP server setup: enabling the MCP server, Streamable HTTP
 
 ## Overview
 
-MesenCE is a **multi-system emulator** (NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, WonderSwan) with a **built-in MCP server** -- no external process or sidecar is needed. The emulator itself serves the MCP protocol over Streamable HTTP (MCP Protocol Revision 2025-11-25).
+MesenCE is a **multi-system emulator** (NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, WonderSwan) with a **built-in MCP server** -- no external process or sidecar is needed. The emulator itself serves the MCP protocol over Streamable HTTP (MCP 2026-07-28, compatible with 2025-11-25 and earlier clients).
 
 ## Enabling the MCP Server
 
@@ -27,10 +27,11 @@ The default port is **9100**.
 
 ## Transport
 
-- **Protocol:** Streamable HTTP (MCP 2025-11-25)
+- **Protocol:** Streamable HTTP (MCP 2026-07-28; `initialize`-handshake clients on 2025-11-25 and earlier are still accepted)
 - **Endpoint:** `POST http://localhost:9100/mcp` (JSON-RPC 2.0)
 - **SSE support:** Include `Accept: text/event-stream` header for SSE responses
-- **Session management:** Server returns `MCP-Session-Id` header on initialize; include it in all subsequent requests
+- **Sessions:** 2026-07-28 clients are sessionless (no `MCP-Session-Id`; `GET`/`DELETE` on `/mcp` return 405). Only `initialize`-based clients get an `MCP-Session-Id` header, which they must send on all subsequent requests
+- **Origin check:** requests with a non-local `Origin` header are rejected with 403
 
 The server starts automatically when MesenCE launches (if enabled). It does not require a ROM to be loaded -- `mesen_get_status` works even with no ROM loaded.
 
@@ -45,4 +46,4 @@ All MCP tool handlers dispatch to the **emulator thread**. This is single-thread
 3. **Connection refused:** The server only binds to localhost. Remote connections are not supported.
 4. **Tools returning errors:** Most tools require a ROM to be loaded. Use `mesen_load_rom` first, or `mesen_get_status` to check current state.
 5. **Timeout on tool calls:** Some operations may take longer. The emulator pauses during tool execution to ensure consistent state.
-6. **Session errors (400):** Ensure you include the `MCP-Session-Id` header from the initialize response on all subsequent requests.
+6. **Session errors (400):** Only for `initialize`-based clients: include the `MCP-Session-Id` header from the initialize response on all subsequent requests.
