@@ -1,5 +1,5 @@
 ---
-description: "Game Boy/GBC reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank analysis, patch ROMs, automate input, MBC/banking analysis, tile/sprite inspection, CGB features. GB-specific memory types, vectors, registers, and instruction patterns."
+description: "Game Boy/GBC reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank analysis, patch ROMs, automate input, MBC/banking analysis, tile/sprite inspection, CGB features. GB-specific memory types, vectors, registers, and instruction patterns. Use when planning or executing reverse engineering, translation or ROM hacking tasks on a Game Boy or Game Boy Color game in MesenCE."
 ---
 
 # Game Boy / GBC Reverse Engineering Workflows

@@ -1,7 +1,7 @@
 {
   "name": "mesence",
   "description": "MesenCE multi-system emulator MCP integration for Claude Code: runtime debugging, memory inspection, disassembly, tracing, ROM hacking, text search, and more. 57 MCP tools for NES, SNES, Game Boy, GBA, PC Engine, SMS, and WonderSwan reverse engineering.",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "author": {
     "name": "sadnescity"
   },

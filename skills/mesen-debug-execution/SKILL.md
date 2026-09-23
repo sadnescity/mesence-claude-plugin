@@ -20,7 +20,7 @@ The debugger auto-initializes on first use -- no setup call is needed. All tools
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `mesen_step(cpuType, count?, stepType?)` | cpuType (required), count=1, stepType=Step | Step the CPU. Returns CPU state as a single text line (same format as `mesen_get_state(cpu)`). |
+| `mesen_step(cpuType, count?, stepType?)` | cpuType (required), count=1, stepType=Step | Step the CPU. Returns CPU state as a single text line (same format as `mesen_get_state(component="cpu", ...)`). |
 
 **Step types:**
 - `Step` -- execute a single instruction (default)

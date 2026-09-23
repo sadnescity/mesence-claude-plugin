@@ -1,5 +1,5 @@
 ---
-description: "Per-console reference for MesenCE: memory types, CPU types, tile formats, cheat types for NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, WonderSwan"
+description: "Per-console reference for MesenCE: memory types, CPU types, tile formats, cheat types for NES, SNES, Game Boy, GBA, PC Engine, SMS/Game Gear, WonderSwan, plus the memory-map and CPU-instruction MCP resources. Use when choosing the memoryType, cpuType, tile format or cheat type argument for a MesenCE tool call."
 ---
 
 ## Overview

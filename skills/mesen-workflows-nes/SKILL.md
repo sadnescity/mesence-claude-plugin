@@ -1,5 +1,5 @@
 ---
-description: "NES reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank/NMI analysis, patch ROMs, automate input, ROM/mapper analysis, CHR graphics editing, PPU/nametable inspection. NES-specific memory types, vectors, registers, and instruction patterns."
+description: "NES reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank/NMI analysis, patch ROMs, automate input, ROM/mapper analysis, CHR graphics editing, PPU/nametable inspection. NES-specific memory types, vectors, registers, and instruction patterns. Use when planning or executing reverse engineering, translation or ROM hacking tasks on an NES/Famicom game in MesenCE."
 ---
 
 # NES Reverse Engineering Workflows

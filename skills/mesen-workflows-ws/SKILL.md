@@ -1,5 +1,5 @@
 ---
-description: "WonderSwan / WonderSwan Color reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank analysis, patch ROMs, automate input. WS-specific memory types, vectors, registers, and instruction patterns."
+description: "WonderSwan / WonderSwan Color reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank analysis, patch ROMs, automate input. WS-specific memory types, vectors, registers, and instruction patterns. Use when planning or executing reverse engineering, translation or ROM hacking tasks on a WonderSwan game in MesenCE."
 ---
 
 # WonderSwan / WonderSwan Color Reverse Engineering Workflows

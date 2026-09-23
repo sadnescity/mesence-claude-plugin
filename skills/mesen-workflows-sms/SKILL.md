@@ -1,5 +1,5 @@
 ---
-description: "SMS / Game Gear reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank/IM1 analysis, patch ROMs, automate input. SMS-specific memory types, vectors, registers, and instruction patterns."
+description: "SMS / Game Gear reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank/IM1 analysis, patch ROMs, automate input. SMS-specific memory types, vectors, registers, and instruction patterns. Use when planning or executing reverse engineering, translation or ROM hacking tasks on a Master System or Game Gear game in MesenCE."
 ---
 
 # SMS / Game Gear Reverse Engineering Workflows

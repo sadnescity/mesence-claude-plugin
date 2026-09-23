@@ -1,5 +1,5 @@
 ---
-description: "GBA reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank/IRQ analysis, patch ROMs, automate input, BIOS calls, BG mode and sprite inspection. GBA-specific memory types, vectors, registers, and instruction patterns."
+description: "GBA reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank/IRQ analysis, patch ROMs, automate input, BIOS calls, BG mode and sprite inspection. GBA-specific memory types, vectors, registers, and instruction patterns. Use when planning or executing reverse engineering, translation or ROM hacking tasks on a Game Boy Advance game in MesenCE."
 ---
 
 # GBA Reverse Engineering Workflows

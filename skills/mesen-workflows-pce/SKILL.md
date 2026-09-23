@@ -1,5 +1,5 @@
 ---
-description: "PC Engine / TurboGrafx-16 reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank/IRQ1 analysis, patch ROMs, automate input. PCE-specific memory types, vectors, registers, and instruction patterns."
+description: "PC Engine / TurboGrafx-16 reverse engineering workflows for MesenCE: find text, find variables, analyze routines, VBlank/IRQ1 analysis, patch ROMs, automate input. PCE-specific memory types, vectors, registers, and instruction patterns. Use when planning or executing reverse engineering, translation or ROM hacking tasks on a PC Engine/TurboGrafx-16 game in MesenCE."
 ---
 
 # PC Engine / TurboGrafx-16 Reverse Engineering Workflows
